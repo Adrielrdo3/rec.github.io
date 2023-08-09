@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Screen Sharing Example</title>
+</head>
+<body>
+  <h1>Screen Sharing Example</h1>
+  <p>The shared screen is displayed below.</p>
+  <video id="shared-screen-video"></video>
+
+  <script>
+    // This function is called when a new request is received.
+    function onRequest(event) {
+      // Get the stream object from the request body.
+      const stream = JSON.parse(event.body);
+
+      // Create a new video element to display the stream.
+      const video = document.getElementById("shared-screen-video");
+      video.srcObject = stream;
+      video.play();
+    }
+
+    // Initialize the WebSocket server.
+    var server = new WebSocketServer({ port: 8080 });
+    server.onmessage = onRequest;
+  </script>
+</body>
+</html>
